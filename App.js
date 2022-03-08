@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ItemList from "./src/ItemsList";
+import MarketList from "./src/MarketsList";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer theme={DarkTheme}>
+      <Stack.Navigator>
+        <Stack.Group
+          screenOptions={{
+            headerStyle: { backgroundColor: "3A2D80" },
+          }}
+        >
+          <Stack.Screen name="Mercados" component={MarketList} />
+          <Stack.Screen name="Lista" component={ItemList} />
+        </Stack.Group>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+/*
+backgroundColor: "#3A2D80",
+backgroundColor: "#6957E7",
+backgroundColor: "#A763FG",
+*/
