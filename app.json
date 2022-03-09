@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-shopping-list",
-    "slug": "react-native-shopping-list",
+    "name": "mercalist",
+    "slug": "mercalist",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
