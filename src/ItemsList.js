@@ -50,6 +50,7 @@ const ItemList = ({ route, navigation }) => {
 
   const addItem = async (item) => {
     onChangeText("");
+    if (item.length === 0) return;
     try {
       const newValues = { ...values, ...{ [item]: false } };
       const parse = JSON.stringify(newValues);
@@ -78,9 +79,9 @@ const ItemList = ({ route, navigation }) => {
     } catch {}
   };
 
-  const findItem = (text) => {
+  const findItem = async (text) => {
+    await getData();
     const trueItems = [];
-
     itemsList.map((item) => {
       if (item.includes(text)) trueItems.push(item);
     });
@@ -114,10 +115,10 @@ const ItemList = ({ route, navigation }) => {
           renderItem={({ item, index }) => (
             <Pressable
               key={index}
-              style={styles.containerBuy}
+              style={styles.containerItemToBuy}
               onPress={() => changeState(item)}
             >
-              <Text style={styles.item}>{item}</Text>
+              <Text style={styles.itemToBuy}>{item}</Text>
             </Pressable>
           )}
         />
@@ -131,7 +132,7 @@ const ItemList = ({ route, navigation }) => {
               placeholder="Escriba el producto"
               value={text}
             />
-            <Pressable onPress={() => addItem(text)} disabled={text.length < 1}>
+            <Pressable onPress={() => addItem(text)}>
               <Text style={styles.appButtonText}>+ Añadir</Text>
             </Pressable>
             <Pressable onPress={() => findItem(text)}>
@@ -144,6 +145,8 @@ const ItemList = ({ route, navigation }) => {
           <FlatList
             data={itemsList}
             keyExtractor={(item, index) => index}
+            numColumns={2}
+            columnWrapperStyle={{ flex: 1, justifyContent: "space-around" }}
             renderItem={({ item, index }) => (
               <Pressable
                 key={index}
@@ -170,22 +173,24 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     padding: 4,
-    backgroundColor: "#3A2D80",
+    backgroundColor: "#6957E7",
   },
   buttonContainerActive: {
     flex: 1,
     padding: 4,
-    backgroundColor: "#6957E7",
+    backgroundColor: "#3A2D80",
   },
   containerBuy: {
-    backgroundColor: "#6957E7",
-    textAlign: "center",
+    display: "flex",
+    flexDirection: "row",
+  },
+  containerItemToBuy: {
+    backgroundColor: "#3A2D80",
     alignItems: "center",
-    padding: 10,
+    padding: 5,
     margin: 5,
-    borderRadius: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#3A2D80",
+    marginHorizontal: 60,
+    borderRadius: 20,
   },
   buttonSelectList: {
     color: "#fff",
@@ -211,13 +216,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
-    backgroundColor: "#6957E7",
+    backgroundColor: "#3A2D80",
   },
   input: {
     color: "#fff",
+    borderColor: "#fff",
     height: 40,
     width: 150,
-    borderColor: "#fff",
     borderRadius: 10,
     padding: 10,
     marginRight: 10,
@@ -225,14 +230,23 @@ const styles = StyleSheet.create({
   },
   appButtonText: {
     color: "#fff",
+    borderColor: "#fff",
     padding: 10,
     borderWidth: 1,
-    borderColor: "#fff",
     borderRadius: 10,
-    marginRight: 10,
+    marginRight: 8,
+  },
+  itemToBuy: {
+    color: "#fff",
+    fontSize: 20,
   },
   item: {
     color: "#fff",
+    fontSize: 15,
+    padding: 10,
+    width: 100,
+    maxWidth: 100,
+    minWidth: 100,
   },
 });
 
